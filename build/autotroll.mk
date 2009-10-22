@@ -48,50 +48,66 @@ SUFFIXES = .moc.cpp .moc.cc .moc.cxx .moc.C .h .hh \
 # MOC #
 # --- #
 
+at_v_MOC   = $(at_v_MOC_$(V))
+at_v_MOC_  = $(at_v_MOC_$(AM_DEFAULT_VERBOSITY))
+at_v_MOC_0 = @echo "  MOC   " $@;
+at_moc_cmd = $(MOC) $(QT_CPPFLAGS) $(EXTRA_CPPFLAGS)
+
 .hh.moc.cpp:
-	$(MOC) $(QT_CPPFLAGS) $(EXTRA_CPPFLAGS) $< -o $@
+	$(at_v_MOC)$(at_moc_cmd) -o $@ $<
+
 .h.moc.cpp:
-	$(MOC) $(QT_CPPFLAGS) $(EXTRA_CPPFLAGS) $< -o $@
+	$(at_v_MOC)$(at_moc_cmd) -o $@ $<
 
 .hh.moc.cc:
-	$(MOC) $(QT_CPPFLAGS) $(EXTRA_CPPFLAGS) $< -o $@
+	$(at_v_MOC)$(at_moc_cmd) -o $@ $<
+
 .h.moc.cc:
-	$(MOC) $(QT_CPPFLAGS) $(EXTRA_CPPFLAGS) $< -o $@
+	$(at_v_MOC)$(at_moc_cmd) -o $@ $<
 
 .hh.moc.cxx:
-	$(MOC) $(QT_CPPFLAGS) $(EXTRA_CPPFLAGS) $< -o $@
+	$(at_v_MOC)$(at_moc_cmd) -o $@ $<
+
 .h.moc.cxx:
-	$(MOC) $(QT_CPPFLAGS) $(EXTRA_CPPFLAGS) $< -o $@
+	$(at_v_MOC)$(at_moc_cmd) -o $@ $<
 
 .hh.moc.C:
-	$(MOC) $(QT_CPPFLAGS) $(EXTRA_CPPFLAGS) $< -o $@
+	$(at_v_MOC)$(at_moc_cmd) -o $@ $<
+
 .h.moc.C:
-	$(MOC) $(QT_CPPFLAGS) $(EXTRA_CPPFLAGS) $< -o $@
+	$(at_v_MOC)$(at_moc_cmd) -o $@ $<
 
 # --- #
 # UIC #
 # --- #
 
+at_v_UIC   = $(at_v_UIC_$(V))
+at_v_UIC_  = $(at_v_UIC_$(AM_DEFAULT_VERBOSITY))
+at_v_UIC_0 = @echo "  UIC   " $@;
+
 .ui.ui.hh:
-	$(UIC) $< -o $@
+	$(at_v_UIC)$(UIC) -o $@ $<
 
 .ui.ui.h:
-	$(UIC) $< -o $@
+	$(at_v_UIC)$(UIC) -o $@ $<
 
 # --- #
 # RCC #
 # --- #
 
+at_v_RCC   = $(at_v_RCC_$(V))
+at_v_RCC_  = $(at_v_RCC_$(AM_DEFAULT_VERBOSITY))
+at_v_RCC_0 = @echo "  RCC   " $@;
+at_rcc_cmd = $(RCC) -name `expr 'X/$<' : '.*[\\/]\(.*\)\.qrc$$'`
+
 .qrc.qrc.cpp:
-	$(RCC) -name `echo "$<" | sed 's|^.*/\(.*\)\.qrc$$|\1|'` $< -o $@
+	$(at_v_RCC)$(at_rcc_cmd) -o $@ $<
 
 .qrc.qrc.cc:
-	$(RCC) -name `echo "$<" | sed 's|^.*/\(.*\)\.qrc$$|\1|'` $< -o $@
+	$(at_v_RCC)$(at_rcc_cmd) -o $@ $<
 
 .qrc.qrc.cxx:
-	$(RCC) -name `echo "$<" | sed 's|^.*/\(.*\)\.qrc$$|\1|'` $< -o $@
+	$(at_v_RCC)$(at_rcc_cmd) -o $@ $<
 
 .qrc.qrc.C:
-	$(RCC) -name `echo "$<" | sed 's|^.*/\(.*\)\.qrc$$|\1|'` $< -o $@
-
-DISTCLEANFILES = $(BUILT_SOURCES)
+	$(at_v_RCC)$(at_rcc_cmd) -o $@ $<
