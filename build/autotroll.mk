@@ -44,12 +44,16 @@ SUFFIXES = .moc.cpp .moc.cc .moc.cxx .moc.C .h .hh \
            .ui .ui.h .ui.hh \
            .qrc .qrc.cpp .qrc.cc .qrc.cxx .qrc.C
 
+# Evaluates to 0 iff silent rules are enabled
+at_verbosity   = $(at_verbosity_$(V))
+at_verbosity_  = $(AM_DEFAULT_VERBOSITY)
+at_verbosity_0 = 0
+
 # --- #
 # MOC #
 # --- #
 
-at_v_MOC   = $(at_v_MOC_$(V))
-at_v_MOC_  = $(at_v_MOC_$(AM_DEFAULT_VERBOSITY))
+at_v_MOC   = $(at_v_MOC_$(at_verbosity))
 at_v_MOC_0 = @echo "  MOC   " $@;
 at_moc_cmd = $(MOC) $(QT_CPPFLAGS) $(EXTRA_CPPFLAGS)
 
@@ -81,8 +85,7 @@ at_moc_cmd = $(MOC) $(QT_CPPFLAGS) $(EXTRA_CPPFLAGS)
 # UIC #
 # --- #
 
-at_v_UIC   = $(at_v_UIC_$(V))
-at_v_UIC_  = $(at_v_UIC_$(AM_DEFAULT_VERBOSITY))
+at_v_UIC   = $(at_v_UIC_$(at_verbosity))
 at_v_UIC_0 = @echo "  UIC   " $@;
 
 .ui.ui.hh:
@@ -95,8 +98,7 @@ at_v_UIC_0 = @echo "  UIC   " $@;
 # RCC #
 # --- #
 
-at_v_RCC   = $(at_v_RCC_$(V))
-at_v_RCC_  = $(at_v_RCC_$(AM_DEFAULT_VERBOSITY))
+at_v_RCC   = $(at_v_RCC_$(at_verbosity))
 at_v_RCC_0 = @echo "  RCC   " $@;
 at_rcc_cmd = $(RCC) -name `expr 'X/$<' : '.*[\\/]\(.*\)\.qrc$$'`
 
